@@ -13,54 +13,53 @@ import java.net.URL;
 public class Appium02 {
     @Test
     public void test() throws MalformedURLException, InterruptedException {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
+        DesiredCapabilities capabilities=new DesiredCapabilities();
+       // capabilities.setCapability("platformName","Android");
+        //1.yol manuel olarak yazabılırız(seleniumdan gelir)
+     //   capabilities.setCapability(CapabilityType.PLATFORM_NAME,"Android");
+        //Hazır seleniumdan gelen methodlar sayesinde yazabiliriz
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME,"Android");
+        //Buda appiumdan gelen methodlar sayesinde yazabiliriz.
+        //Bu uc yolda aynısını yapar
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION,"11");
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME,"emulator-5556");
+        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME,"UiAutomator2");
+        //Yukarıda calısacagımız telefonun ozellıklerını verdık
 
-        // capabilities.setCapability("platformName","Android");//String ve selenium methodlari ile
-        // capabilities.setCapability(CapabilityType.PLATFORM_NAME,"Android");//Selenium methodlari ile
+        capabilities.setCapability(MobileCapabilityType.APP,"C:/Users/USERR/IdeaProjects/AppiumFirst/src/Apps/gestureTool.apk");
+        /*cmd'ye sırası ıle  adb shell
+        dumpsys window | grep -E "mCurrentFocus" yaz gelen bilgileri asagiya yaz eger bunları yapmadan calısmaz ıse*/
+        capabilities.setCapability("appPackage","com.davemac327.gesture.tool");
+        capabilities.setCapability("appActivity","com.davemac327.gesture.tool.GestureBuilderActivity");
+
+        //Eger aplikasyonu izinler atlayarak ana sayfada acılmasını ıstıyorsanız asagidaki komutu kullanıyoruz
+        capabilities.setCapability("noReset",true);
+
+        AndroidDriver<MobileElement> driver =new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723/wd/hub"),capabilities);
+        //Benim cihazımın ozellıklerını verdım ve andorıd drıver vasıtası ile ulasıyorum ve capatilities leri bu url ile gonder
 
 
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");//Appium methodlari ile
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "12.0");
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "RealDevice");
-        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UiAutomator2");
-        //capabilities.setCapability(MobileCapabilityType.APP, "C:/Users/Sony/IdeaProjects/AppiumFirst/src/Apps/gestureTool.apk");
-capabilities.setCapability("noReset",true);
-        /*
-        cmd'ye sırası ıle
-        adb shell
-        dumpsys window | grep -E "mCurrentFocus"
-        yaz gelen bilgileri asagiya yaz eger bunları yapmadan calısmaz ıse
-        */
 
-        //adb shell
-        //dumpsys window | grep -E "mCurrentFocus"
-        //capabilities.setCapability("appPackage", "com.davemac327.gesture.tool");
-        //capabilities.setCapability("appActivity", "com.davemac327.gesture.tool.GestureBuilderActivity");
+        //add button
+       // driver.findElementById("com.davemac327.gesture.tool:id/addButton").click();
+
+        System.out.println("app yuklendi");
+        Thread.sleep(7000);
+        driver.findElementById("com.android.permissioncontroller:id/continue_button").click();
 
 
         Thread.sleep(7000);
-        AndroidDriver<MobileElement> driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        MobileElement okButton=driver.findElementByXPath("//android.widget.Button[@text='OK']");
+        okButton.click();
+        System.out.println("Izinler onaylandi");
 
-        System.out.println("App yuklendi");
 
-//        Thread.sleep(7000);
-//        driver.findElementById("com.android.permissioncontroller:id/continue_button").click();
-//        Thread.sleep(5000);
-//        MobileElement tamamButton = driver.findElementByXPath("//android.widget.Button[@text='TAMAM']");
-//        Thread.sleep(5000);
-//        tamamButton.click();
-//        System.out.println("Izinler onaylandi");
-//
-       Thread.sleep(5000);
-        MobileElement homeScreenTitle = driver.findElementById("android:id/title");
+
+        MobileElement homeScreenTitle=driver.findElementById("android:id/title");
         Assert.assertTrue(homeScreenTitle.isDisplayed());
         System.out.println("Ana sayfa acildi");
 
 
-
-
-        //session close
-        driver.closeApp();
 
     }
 }

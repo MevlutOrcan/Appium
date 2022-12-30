@@ -1,38 +1,37 @@
 package appium;
 
 import io.appium.java_client.MobileElement;
-import org.testng.Assert;
-import org.testng.annotations.Test;
-
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
-
+import org.testng.annotations.Test;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Appium14BrowserStackCalculator {
+import static org.junit.Assert.assertEquals;
 
+public class Appium14browserStackCalculator {
     @Test
-    public void testCalcuCloud() throws MalformedURLException, InterruptedException {
+    public void testName() throws MalformedURLException, InterruptedException {
+
         DesiredCapabilities caps = new DesiredCapabilities();
 
         // Set your access credentials
-        caps.setCapability("browserstack.user", "mevlutorcan_JK3TfA");
-        caps.setCapability("browserstack.key", "31cDEZnQ6VDznzeLqC9i");
+        caps.setCapability("browserstack.user", "yeliz_qwXbeQ");
+        caps.setCapability("browserstack.key", "LsDW39mYPcyvKy7R5qu4");
 
         // Set URL of the application under test
-        caps.setCapability("app", "bs://1d56ddb20c693bc6bdefc55985b4f9d9bb32c497");
+        caps.setCapability("app", "bs://eaefcb6b381719dc3fab033dfd9120e4fe655c75");
 
         // Specify device and os_version for testing
         caps.setCapability("device", "Google Pixel 3");
         caps.setCapability("os_version", "9.0");
 
         // Set other BrowserStack capabilities
-        caps.setCapability("project", "Google Pixel 3 Appium Project");
-        caps.setCapability("build", "browserstack-build-1");
-        caps.setCapability("name", "first_test");
+        caps.setCapability("project", "Kendi aplikasyonumuz");
+        caps.setCapability("build", "yeni");
+        caps.setCapability("name", "hesap makinasi");
 
 
         // Initialise the remote Webdriver using BrowserStack remote URL
@@ -40,37 +39,34 @@ public class Appium14BrowserStackCalculator {
         AndroidDriver<AndroidElement> driver = new AndroidDriver<AndroidElement>(
                 new URL("http://hub.browserstack.com/wd/hub"), caps);
 
-        MobileElement n1 = driver.findElementById("com.google.android.calculator:id/digit_1"),
-                n2 = driver.findElementById("com.google.android.calculator:id/digit_2"),
-                n3 = driver.findElementById("com.google.android.calculator:id/digit_3"),
-                n4 = driver.findElementById("com.google.android.calculator:id/digit_4"),
-                n5 = driver.findElementByXPath("//android.widget.Button[contains(@resource-id,'5')]"),
-                n6 = driver.findElementById("com.google.android.calculator:id/digit_6"),
-                n7 = driver.findElementById("com.google.android.calculator:id/digit_7"),
-                n8 = driver.findElementById("com.google.android.calculator:id/digit_8"),
-                n9 = driver.findElementById("com.google.android.calculator:id/digit_9"),
-                n0 = driver.findElementByXPath("//android.widget.Button[contains(@resource-id,'0')]"),
-                eq = driver.findElementById("com.google.android.calculator:id/eq");
-
-        MobileElement
-                add = driver.findElementById("com.google.android.calculator:id/op_add");
-
-
-
-        n7.click();
-        n7.click();
-        add.click();
-        n7.click();
-        MobileElement prEq = driver.findElementById("com.google.android.calculator:id/result_preview");
-        String preqNum = prEq.getText();
-        eq.click();
-        MobileElement finalEq = driver.findElementById("com.google.android.calculator:id/result_final");
-        Assert.assertEquals(preqNum, finalEq.getText());
-
-
+        // Write your test case statements here
 
         // Invoke driver.quit() after the test is done to indicate that the test is completed.
-        driver.quit();
 
+
+     /*boylede alınabılır ıd ıle
+      driver.findElementById("com.google.android.calculator:id/digit_5").click();*/
+        driver.findElementByXPath("//android.widget.Button[contains(@resource-id,'5')]").click();
+        Thread.sleep(3000);
+
+        MobileElement plus=driver.findElementByAccessibilityId("plus");
+        plus.click();
+        Thread.sleep(3000);
+
+        driver.findElementByXPath("//android.widget.Button[contains(@resource-id,'5')]").click();
+        Thread.sleep(3000);
+
+        MobileElement equals= driver.findElementByAccessibilityId("equals");
+        equals.click();
+        Thread.sleep(3000);
+
+        MobileElement actualResult=driver.findElementById("com.google.android.calculator:id/result_final");
+
+       assertEquals("10",actualResult.getText());
+
+
+
+
+        driver.quit();
     }
 }

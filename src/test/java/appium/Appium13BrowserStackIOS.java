@@ -11,14 +11,14 @@ import org.testng.annotations.Test;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Appium13BrowserIOS {
+public class Appium13BrowserStackIOS {
     @Test
-    public void testIOS() throws MalformedURLException, InterruptedException {
+    public void browserStackIOS() throws MalformedURLException, InterruptedException {
         DesiredCapabilities caps = new DesiredCapabilities();
 
         // Set your access credentials
-        caps.setCapability("browserstack.user", "mevlutorcan_JK3TfA");
-        caps.setCapability("browserstack.key", "31cDEZnQ6VDznzeLqC9i");
+        caps.setCapability("browserstack.user", "yeliz_qwXbeQ");
+        caps.setCapability("browserstack.key", "LsDW39mYPcyvKy7R5qu4");
 
         // Set URL of the application under test
         caps.setCapability("app", "bs://444bd0308813ae0dc236f8cd461c02d3afa7901d");
@@ -29,9 +29,9 @@ public class Appium13BrowserIOS {
 
 
         // Set other BrowserStack capabilities
-        caps.setCapability("project", "First Appium IOS Project");
-        caps.setCapability("build", "browserstack-build-1");
-        caps.setCapability("name", "first_IOS_test");
+        caps.setCapability("project", "AppiumIOS Project");
+        caps.setCapability("build", "browserstack-2");
+        caps.setCapability("name", "second_test");
 
 
         // Initialise the remote Webdriver using BrowserStack remote URL
@@ -44,10 +44,14 @@ public class Appium13BrowserIOS {
         IOSElement textButton = (IOSElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.elementToBeClickable(MobileBy.AccessibilityId("Text Button")));
         textButton.click();
+
         IOSElement textInput = (IOSElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.elementToBeClickable(MobileBy.AccessibilityId("Text Input")));
         textInput.sendKeys("hello@browserstack.com");
+
+
         Thread.sleep(5000);
+
         IOSElement textOutput = (IOSElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.elementToBeClickable(MobileBy.AccessibilityId("Text Input")));
         if(textOutput != null && textOutput.getText().equals("hello@browserstack.com"))

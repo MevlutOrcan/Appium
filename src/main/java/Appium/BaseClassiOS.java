@@ -22,7 +22,8 @@ public class BaseClassiOS {
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 8");
         capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "XCUITest");
         capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, "60000");
-        capabilities.setCapability("bundleId", "C:\\Users\\Sony\\IdeaProjects\\AppiumFirst\\src\\Apps\\ApiDemos.apk");
+    //xcode da yuklenen simple calculator path
+        capabilities.setCapability("bundleId", "com.SamadiPour.SimpleCalculator");
 
         // capabilities.setCapability("appPackage", "com.android.chrome");
         //capabilities.setCapability("appActivity", "com.google.android.apps.chrome.Main");

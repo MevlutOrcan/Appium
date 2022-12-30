@@ -9,65 +9,71 @@ import org.testng.annotations.Test;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Set;
+
 import java.util.concurrent.TimeUnit;
 
 public class Appium06NativeChrome {
-
     @Test
-    public void test01() throws InterruptedException, MalformedURLException {
+    public void test() throws MalformedURLException, InterruptedException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");//Appium methodlari ile
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "12.0");
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "RealDevice");
+
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "11");
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "emulator-5554");
         capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UiAutomator2");
+
+
         capabilities.setCapability("appPackage", "com.android.chrome");
         capabilities.setCapability("appActivity", "com.google.android.apps.chrome.Main");
         capabilities.setCapability("noReset", true);
 
-        Thread.sleep(7000);
+        Thread.sleep(5000);
+
         AndroidDriver<MobileElement> driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
 
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
+        driver.get("https://www.amazon.com");
+
+
+
+
 
         if (driver.isDeviceLocked()) {
             driver.unlockDevice();
         }
 
-        driver.get("https://www.amazon.com");
-        Thread.sleep(7000);
+
+        driver.manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
 
         MobileElement homeScreenLogo = driver.findElementByAccessibilityId("Amazon");
         Assert.assertTrue(homeScreenLogo.isDisplayed());
+        System.out.println("Anasayfada");
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        //  System.out.println(driver.getCurrentUrl() + "<======== url");
 
+       /* MobileElement signInButton = driver.findElementByXPath("//android.view.View[@content-desc=\"Giriş Yap ›\"]/android.widget.TextView");
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        signInButton.click();*/
 
-        System.out.println("Ana sayfadayiz");
-
-        Thread.sleep(3000);
-        MobileElement signInButton=driver.findElementByAccessibilityId("Sign in ›");
+        MobileElement signInButton = driver.findElementByXPath("//android.view.View[@content-desc=\"Sign in ›\"]/android.widget.TextView");
         signInButton.click();
-        System.out.println("sign in sayfasi");
-
-
         Thread.sleep(3000);
-        MobileElement createAccount=driver.findElementByXPath("//android.widget.TextView[@text='Create account. New to Amazon?']");
-        Assert.assertTrue(createAccount.isDisplayed());
-        System.out.println("test bitti :)");
-      /*  String guncelTur=driver.getContext();
-        System.out.println(guncelTur+"  <== degisim oncesi context");
-        // burda aplikasyonun hangi turleri oldugunu gormek icin getContextHandles() kullaniyoruz
-        Set<String> tumTurler=driver.getContextHandles();
-        for (String w: tumTurler){
-            System.out.println(w);
-            if (guncelTur.contains("WEBVIEW_chrome")){
-                driver.context(guncelTur);
-                break;
-            }
-        }
-        System.out.println(guncelTur+"  <== degisim sonrasi context");*/
+
+
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        MobileElement welcome = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View[1]/android.view.View[4]/android.view.View[1]");
+        Assert.assertTrue(welcome.isDisplayed());
+        System.out.println("welcome sayfasında");
+
+     /*   MobileElement createAccount=driver.findElementByXPath("//android.widget.TextView[@text='Create account. New to Amazon?']");
+        Assert.assertTrue(createAccount.isDisplayed());*/
+
         driver.closeApp();
-
-
     }
+
 }
+
+

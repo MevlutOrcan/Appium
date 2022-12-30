@@ -13,13 +13,15 @@ import java.net.URL;
 import java.util.List;
 
 public class Appium12BrowserStackAndroid {
+
     @Test
-    public void testBrowserStackAndroid() throws MalformedURLException, InterruptedException {
+    public void browserStackAndroid() throws InterruptedException, MalformedURLException {
+
         DesiredCapabilities caps = new DesiredCapabilities();
 
         // Set your access credentials
-        caps.setCapability("browserstack.user", "mevlutorcan_JK3TfA");
-        caps.setCapability("browserstack.key", "31cDEZnQ6VDznzeLqC9i");
+        caps.setCapability("browserstack.user", "yeliz_qwXbeQ");
+        caps.setCapability("browserstack.key", "LsDW39mYPcyvKy7R5qu4");
 
         // Set URL of the application under test
         caps.setCapability("app", "bs://c700ce60cf13ae8ed97705a55b8e022f13c5827c");
@@ -37,7 +39,7 @@ public class Appium12BrowserStackAndroid {
         // Initialise the remote Webdriver using BrowserStack remote URL
         // and desired capabilities defined above
         AndroidDriver<AndroidElement> driver = new AndroidDriver<AndroidElement>(
-                new URL("http://hub.browserstack.com/wd/hub"), caps);
+                new URL("http://hub.browserstack.com/wd/hub"), caps);//cloud daki browser stack ile irtibata geciriyoruz
 
         // Test case for the BrowserStack sample Android app.
         // If you have uploaded your app, update the test case here.
