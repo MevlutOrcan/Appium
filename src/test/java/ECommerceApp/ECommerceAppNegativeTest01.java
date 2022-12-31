@@ -9,7 +9,7 @@ import java.net.MalformedURLException;
 
 import static ECommerceApp.BaseECommerceApp.getAndroidDriver;
 
-public class ECommerceApp {
+public class ECommerceAppNegativeTest01 {
     /*
  //1- Fill the form details and verify Toast error messages displayed appropriately for wrong inputs
     //1- hatali data ile form doldurdugunuzda hata mesajini dogrulayin
