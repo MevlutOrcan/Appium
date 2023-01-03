@@ -1,22 +1,16 @@
 package ECommerceApp;
 
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.touch.LongPressOptions;
-import io.appium.java_client.touch.offset.ElementOption;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 
 import java.net.MalformedURLException;
 import java.util.List;
-import java.util.Set;
 
 import static ECommerceApp.BaseECommerceApp.getAndroidDriver;
 
-public class WebApp {
+public class TotalAmountValidation05Scrool {
     /*
  //1- Fill the form details and verify Toast error messages displayed appropriately for wrong inputs
     //1- hatali data ile form doldurdugunuzda hata mesajini dogrulayin
@@ -81,13 +75,21 @@ public class WebApp {
         Assert.assertTrue(productsTitle.isDisplayed());
         System.out.println("User on the products page");
 
-        MobileElement firstProduct = driver.findElementByXPath("//android.widget.TextView[@text='Air Jordan 4 Retro']");
-        MobileElement secondProduct = driver.findElementByXPath("//android.widget.TextView[@text='Air Jordan 1 Mid SE']");
+        String firstShoe="Air Jordan 4 Retro";
+        String secondShoe="Jordan Lift Off";
 
 
+        MobileElement firstProduct = driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"" + firstShoe + "\"))");
+        MobileElement firstProductAddButton = driver.findElementByXPath("((//android.widget.TextView[@text='"+firstShoe+"']//following-sibling::*)[2]//following-sibling::*)[2]");
         String firstProductName = firstProduct.getText();
+
+        firstProductAddButton.click();
+        MobileElement secondProduct = driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"" + secondShoe + "\"))");
+        MobileElement secondProductAddButton = driver.findElementByXPath("((//android.widget.TextView[@text='"+secondShoe+"']//following-sibling::*)[2]//following-sibling::*)[2]");
         String secondProductName = secondProduct.getText();
-        firstProduct.click();
+        secondProductAddButton.click();
+
+
         System.out.println("first product is clicked");
 
 
@@ -106,7 +108,7 @@ public class WebApp {
         Double totalAmount = 0.0;
         for (int i = 0; i < addToCarts.size(); i++) {
             if (addToCarts.get(i).getText().equals("ADDED TO CART")) {
-                totalAmount += Double.parseDouble(prices.get(i).getText().replace("$", ""));
+                totalAmount += Double.parseDouble(prices.get(i).getText().replace("$",""));
 
             }
         }
@@ -136,81 +138,20 @@ yada bu sorunu cozebılmek mobılelement veraeblesıne atama yapmamız gerekır
         System.out.println("second product in demand is in the cart");
 
         prices = driver.findElementsById("com.androidsample.generalstore:id/productPrice");
-        //ustteki calismazsa
-        //prices = driver.findElementsById("//android.widget.TextView[@resource-id='com.androidsample.generalstore:id/productPrice']");
-
         addToCarts = driver.findElementsById("com.androidsample.generalstore:id/productAddCart");
-        /*List<MobileElement> prices=driver.findElementsByXPath("//android.widget.TextView[@resource-id='com.androidsample.generalstore:id/productPrice']");
-
-Double amount=0.0;
-for (int i = 0; i <prices.size() ; i++) {
-    amount+=Double.parseDouble(prices.get(i).getText().substring(1));
-}
-Double totalPrice=Double.parseDouble(driver.findElementById("com.androidsample.generalstore:id/totalAmountLbl").getText().substring(1));
-Assert.assertEquals(amount, totalPrice);*/
         Double finTotalAmount = 0.0;
         for (int i = 0; i < prices.size(); i++) {
-            finTotalAmount += Double.parseDouble(prices.get(i).getText().replace("$", ""));
+                finTotalAmount += Double.parseDouble(prices.get(i).getText().replace("$",""));
         }
-        System.out.println("choosed product total amount -->" + totalAmount);
-        System.out.println("choosed product in the cart total amount -->" + finTotalAmount);
-MobileElement lastTotalPrice=driver.findElementById("totalAmountLbl");
-        System.out.println(Double.parseDouble(lastTotalPrice.getText().replace("$", "")));
+        System.out.println("choosed product total amount -->"+totalAmount);
+        System.out.println("choosed product in the cart total amount -->"+finTotalAmount);
 
-        Assert.assertEquals(finTotalAmount, totalAmount);
-        Assert.assertTrue(Double.parseDouble(lastTotalPrice.getText().replace("$", ""))== totalAmount);
-
-        //6-Verify if user can do operations on Web view and navigate back to native app if needed.
-        //(go to google and search “appium” then navigate to NATIVE APP and verify it)
-//-6-Kullanıcının Web görünümünde işlem yapıp yapamayacağını doğrulayın ve gerekirse yerel uygulamaya geri dönün.
-        //(google'a gidin ve "appium"u arayın, ardından NATIVE APP'ye gidin ve doğrulayın)
-
-        MobileElement clickBox= driver.findElementByClassName("android.widget.CheckBox");
-        clickBox.click();
-        MobileElement visitWebSite= driver.findElementById("btnProceed");
-        visitWebSite.click();
-Thread.sleep(3000);
-        MobileElement googleSearchBox= driver.findElementByClassName("android.widget.EditText");
-        googleSearchBox.sendKeys("appium");
-//bu kisimda
-        Assert.assertEquals(driver.getContext(),("NATIVE_APP"));
-        Set<String> contexts=driver.getContextHandles();
-
-        for (String w:contexts
-             ) {
-            System.out.println(w);
-            if (w.contains("WEBVIEW")){
-
-
-                driver.context(w);
-
-            }
-        }
-        Assert.assertEquals("WEBVIEW_com.androidsample.generalstore",driver.getContext());
-        driver.findElement(By.xpath("//*[@name=\"q\"]")).clear();
-        driver.findElement(By.xpath("//*[@name=\"q\"]")).sendKeys("Appium",Keys.ENTER);;
-
-        Thread.sleep(3000);
-
-        driver.navigate().back();
-
-        Thread.sleep(3000);
-        for (String w:contexts
-        ) {
-            System.out.println(w);
-            if (w.contains("NATIVE")){
-
-
-                driver.context(w);
-
-            }
-        }
-        System.out.println(driver.getContext());
+        Assert.assertEquals(finTotalAmount,totalAmount);
 
         driver.closeApp();
-        //Popup tam secilmediginde getAttribute ile name alip mesaj icerigi ile assertEquals ediyoruz
+//Popup tam secilmediginde getAttribute ile name alip mesaj icerigi ile assertEquals ediyoruz
         //Eger popup test edılmek ıstenıyorsa ve bu search kod ıcınde bulunmuyorsa yani direk locate edilemiyorsa
-        //developerlar genelde bunu asagıdaki gibi className= "android.widget.Toast" ile build ederler bizde bu sekilde verify ederiz
+//developerlar genelde bunu asagıdaki gibi className= "android.widget.Toast" ile build ederler bizde bu sekilde verify ederiz
 
 
     }
