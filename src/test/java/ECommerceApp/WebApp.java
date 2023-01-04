@@ -3,6 +3,8 @@ package ECommerceApp;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.touch.LongPressOptions;
 import io.appium.java_client.touch.offset.ElementOption;
 import org.junit.Assert;
@@ -188,7 +190,7 @@ Thread.sleep(3000);
         }
         Assert.assertEquals("WEBVIEW_com.androidsample.generalstore",driver.getContext());
         driver.findElement(By.xpath("//*[@name=\"q\"]")).clear();
-        driver.findElement(By.xpath("//*[@name=\"q\"]")).sendKeys("Appium",Keys.ENTER);;
+        driver.findElement(By.xpath("//*[@name=\"q\"]")).sendKeys("Appium",Keys.ENTER);
 
         Thread.sleep(3000);
 
@@ -206,12 +208,18 @@ Thread.sleep(3000);
             }
         }
         System.out.println(driver.getContext());
+        driver.pressKey(new KeyEvent().withKey(AndroidKey.BACK));
+
 
         driver.closeApp();
         //Popup tam secilmediginde getAttribute ile name alip mesaj icerigi ile assertEquals ediyoruz
         //Eger popup test edılmek ıstenıyorsa ve bu search kod ıcınde bulunmuyorsa yani direk locate edilemiyorsa
         //developerlar genelde bunu asagıdaki gibi className= "android.widget.Toast" ile build ederler bizde bu sekilde verify ederiz
-
+/*
+telefonu yan cevirmek icin
+diveceOrientation == text == landscape
+( inspectera yazarak benim devices'imi yatay sekılde ac demek)
+ */
 
     }
 }
